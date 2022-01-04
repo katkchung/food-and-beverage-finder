@@ -1,4 +1,4 @@
-import AddressInput from "../AddressInput";
+import AddressInput from "./AddressInput";
 import List from "./List";
 import { useState } from "react";
 import { Coordinates } from "../apis/mapquestActions";

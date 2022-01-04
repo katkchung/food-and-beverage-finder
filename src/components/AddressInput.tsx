@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { getCoordinates } from "./apis/mapquestActions";
-import { Button, TextField } from "@mui/material";
+import { getCoordinates } from "../apis/mapquestActions";
+import { Button, Grid, TextField } from "@mui/material";
 import { makeStyles } from "@material-ui/core";
-import { Grid } from "@mui/material";
-import YelpLogo from "./yelp_logo.svg";
+import YelpLogo from "../yelp_logo.svg";
 
 const styles = () => {
   return {
