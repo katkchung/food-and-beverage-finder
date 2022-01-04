@@ -11,7 +11,7 @@ An app that leverages the Yelp API and Mapquest API to find local coffeeshops an
 
 ## To Do List
 
-- Get rid of redux
+- ~~Get rid of redux~~
 - Expand radius of coffeeshops
 - Group together coffeeshops of the same chain
 - Filter by driving time

@@ -1,29 +1,28 @@
-import { AppState } from "../store/rootReducer";
-import { connect } from "react-redux";
 import AddressInput from "../AddressInput";
 import List from "./List";
+import { useState } from "react";
+import { Coordinates } from "../apis/mapquestActions";
 
-export interface Props {
-  currentLat: string;
-  currentLong: string;
-}
+const Homepage = () => {
+  const [currentAddress, setCurrentAddress] = useState<string>("");
+  const [coordinates, setCoordinates] = useState<Coordinates | undefined>(
+    undefined
+  );
 
-const Homepage = ({ currentLat, currentLong }: Props) => {
   return (
     <div>
-      <AddressInput />
-      {currentLat && currentLong && (
-        <List lat={currentLat} long={currentLong} />
+      <AddressInput
+        setCurrentAddress={setCurrentAddress}
+        setCoordinates={setCoordinates}
+      />
+      {currentAddress !== "" && coordinates != undefined && (
+        <List
+          currentAddress={currentAddress}
+          currentCoordinates={coordinates}
+        />
       )}
     </div>
   );
 };
 
-const mapStateToProps = (state: AppState) => ({
-  currentLat: state.map.currentLat,
-  currentLong: state.map.currentLong,
-});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Homepage);
+export default Homepage;

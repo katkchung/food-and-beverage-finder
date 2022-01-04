@@ -1,11 +1,6 @@
-import { useState, useEffect } from "react";
-import {
-  getCoordinates,
-  setCurrentAddress,
-} from "./store/mapquestAPI/mapquestActions";
-import { AppState } from "./store/rootReducer";
-import { connect } from "react-redux";
-import { Button, Icon, SvgIcon, TextField } from "@mui/material";
+import { useState } from "react";
+import { getCoordinates } from "./apis/mapquestActions";
+import { Button, TextField } from "@mui/material";
 import { makeStyles } from "@material-ui/core";
 import { Grid } from "@mui/material";
 import YelpLogo from "./yelp_logo.svg";
@@ -24,18 +19,18 @@ const styles = () => {
 const useStyles = makeStyles(styles);
 
 export interface Props {
-  getCoordinates: Function;
   setCurrentAddress: Function;
+  setCoordinates: Function;
 }
 
-const AddressInput = ({ getCoordinates, setCurrentAddress }: Props) => {
+const AddressInput = ({ setCoordinates, setCurrentAddress }: Props) => {
   const classes = useStyles();
   const [address, setAddress] = useState<string>("");
 
   return (
     <div className={classes.root}>
       <Grid container alignItems="center" justifyContent="flex-start">
-        <Grid item xs={1}>
+        <Grid item xs>
           <img className={classes.logo} src={YelpLogo} />
         </Grid>
         <Grid item xs={9}>
@@ -53,7 +48,9 @@ const AddressInput = ({ getCoordinates, setCurrentAddress }: Props) => {
             onClick={() => {
               if (address != "") {
                 setCurrentAddress(address);
-                getCoordinates(address);
+                getCoordinates(address).then((result) =>
+                  setCoordinates(result)
+                );
               }
             }}
           >
@@ -65,14 +62,4 @@ const AddressInput = ({ getCoordinates, setCurrentAddress }: Props) => {
   );
 };
 
-const mapStateToProps = (state: AppState) => ({
-  currentLat: state.map.currentLat,
-  currentLong: state.map.currentLong,
-});
-
-const mapDispatchToProps = {
-  getCoordinates,
-  setCurrentAddress,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddressInput);
+export default AddressInput;

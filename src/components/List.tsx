@@ -1,35 +1,33 @@
 import { useState, useEffect } from "react";
-import { getLocalCoffeeShops } from "../store/yelpApi/yelpActions";
-import { getDrivingTime } from "../store/mapquestAPI/mapquestActions";
-import { AppState } from "../store/rootReducer";
-import { connect } from "react-redux";
+import { getLocalCoffeeShops } from "../apis/yelpActions";
+import { Coordinates } from "../apis/mapquestActions";
 import ShopCard from "./ShopCard";
 import { Grid } from "@mui/material";
 
 export interface Props {
-  coffeeShops: [];
-  getLocalCoffeeShops: Function;
   currentAddress: string;
-  lat: string;
-  long: string;
-  getDrivingTime: Function;
+  currentCoordinates: Coordinates;
 }
 
-const List = ({ coffeeShops, getLocalCoffeeShops, lat, long }: Props) => {
+const List = ({ currentCoordinates, currentAddress }: Props) => {
+  const [coffeeShops, setCoffeeShops] = useState<String[]>([]);
   useEffect(() => {
-    getLocalCoffeeShops(lat, long);
-  }, [lat, long]);
+    getLocalCoffeeShops(currentCoordinates).then((result: any) =>
+      setCoffeeShops(result)
+    );
+  }, [currentCoordinates]);
 
   return (
     <div>
       <Grid container spacing={2}>
         {coffeeShops &&
           coffeeShops.map((shop: any) => (
-            <Grid item xs={3}>
+            <Grid item key={shop.address} xs={3}>
               <ShopCard
                 name={shop.name}
                 address={shop.address}
                 imageUrl={shop.imageUrl}
+                currentAddress={currentAddress}
               />
             </Grid>
           ))}
@@ -38,14 +36,4 @@ const List = ({ coffeeShops, getLocalCoffeeShops, lat, long }: Props) => {
   );
 };
 
-const mapStateToProps = (state: AppState) => ({
-  coffeeShops: state.yelp.coffeeShops,
-  currentAddress: state.map.currentAddress,
-});
-
-const mapDispatchToProps = {
-  getLocalCoffeeShops,
-  getDrivingTime,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default List;
