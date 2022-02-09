@@ -1,12 +1,8 @@
 import axios from 'axios';
+import { Coordinates } from '../types';
 import {MAPQUEST_KEY} from './constants'
 
-export interface Coordinates {
-  lat: string
-  long: string
-}
-
-export async function getCoordinates(address: string): Promise<Coordinates | undefined> {
+export async function getCoordinates(address: string): Promise<Coordinates> {
   try {
     const res = await axios
       .get(
@@ -18,12 +14,12 @@ export async function getCoordinates(address: string): Promise<Coordinates | und
         long: res.data.results[0].locations[0].latLng.lng
       }
   } catch (err) {
-    console.error("Mapquest API lat/long error", err);
+    throw(err)
   }
 };
 
 
-export async function getDrivingTime(address1: string, address2: string): Promise<number | undefined> {
+export async function getDrivingTime(address1: string, address2: string): Promise<number> {
   try {
     const res = await axios
       .get(
@@ -31,6 +27,6 @@ export async function getDrivingTime(address1: string, address2: string): Promis
         )
       return Math.round(parseInt(res.data.route.realTime)/60)
   } catch (err) {
-    console.error("Mapquest API driving times error", err);
+    throw(err)
   }
 }

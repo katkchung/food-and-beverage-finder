@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
-import { getLocalCoffeeShops } from "../apis/yelpActions";
-import { Coordinates } from "../apis/mapquestActions";
-import ShopCard from "./ShopCard";
+import { getLocalCoffeeShops } from "../../apis/yelpActions";
+import ShopCard from "../ShopCard";
 import { Grid } from "@mui/material";
+import { Coffeeshop, Coordinates } from "../../types";
 
 export interface Props {
   currentAddress: string;
   currentCoordinates: Coordinates;
 }
 
-const List = ({ currentCoordinates, currentAddress }: Props) => {
-  const [coffeeShops, setCoffeeShops] = useState<String[]>([]);
+const CoffeeshopList = ({ currentCoordinates, currentAddress }: Props) => {
+  const [coffeeShops, setCoffeeShops] = useState<Coffeeshop[]>([]);
   useEffect(() => {
-    getLocalCoffeeShops(currentCoordinates).then((result: any) =>
+    getLocalCoffeeShops(currentCoordinates).then((result: Coffeeshop[]) =>
       setCoffeeShops(result)
     );
   }, [currentCoordinates]);
@@ -21,7 +21,7 @@ const List = ({ currentCoordinates, currentAddress }: Props) => {
     <div>
       <Grid container spacing={2}>
         {coffeeShops &&
-          coffeeShops.map((shop: any) => (
+          coffeeShops.map((shop: Coffeeshop) => (
             <Grid item key={shop.address} xs={3}>
               <ShopCard
                 name={shop.name}
@@ -36,4 +36,4 @@ const List = ({ currentCoordinates, currentAddress }: Props) => {
   );
 };
 
-export default List;
+export default CoffeeshopList;

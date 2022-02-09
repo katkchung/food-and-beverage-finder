@@ -2,12 +2,13 @@ import { useState } from "react";
 import { getCoordinates } from "../apis/mapquestActions";
 import { Button, Grid, TextField } from "@mui/material";
 import { makeStyles } from "@material-ui/core";
-import YelpLogo from "../yelp_logo.svg";
+import YelpLogo from "../images/yelp_logo.svg";
 
 const styles = () => {
   return {
     root: {
       margin: "16px",
+      marginTop: "0px",
     },
     logo: {
       height: "50px",
@@ -32,7 +33,7 @@ const AddressInput = ({ setCoordinates, setCurrentAddress }: Props) => {
         <Grid item xs>
           <img className={classes.logo} src={YelpLogo} />
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={10}>
           <TextField
             label="Address"
             variant="outlined"
@@ -41,11 +42,11 @@ const AddressInput = ({ setCoordinates, setCurrentAddress }: Props) => {
             fullWidth
           />
         </Grid>
-        <Grid item xs>
+        <Grid item xs={1}>
           <Button
             variant="contained"
             onClick={() => {
-              if (address != "") {
+              if (address !== "") {
                 setCurrentAddress(address);
                 getCoordinates(address).then((result) =>
                   setCoordinates(result)
@@ -53,7 +54,7 @@ const AddressInput = ({ setCoordinates, setCurrentAddress }: Props) => {
               }
             }}
           >
-            Search For Coffee Shops
+            Search For CoffeeShops
           </Button>
         </Grid>
       </Grid>
