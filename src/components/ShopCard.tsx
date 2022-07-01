@@ -1,9 +1,8 @@
 import Card from "@mui/material/Card";
-import { useState, useEffect } from "react";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { makeStyles, Typography } from "@material-ui/core";
-import { getDrivingTime } from "../apis/mapquestActions";
+import { DrivingTime } from "../types";
 
 const styles = () => {
   return {
@@ -25,18 +24,11 @@ export interface Props {
   name: string;
   address: string;
   imageUrl: string;
-  currentAddress: string;
+  drivingTime: DrivingTime;
 }
 
-const ShopCard = ({ name, address, imageUrl, currentAddress }: Props) => {
+const ShopCard = ({ name, address, imageUrl, drivingTime }: Props) => {
   const classes = useStyles();
-  const [drivingTime, setDrivingTime] = useState<number | undefined>(undefined);
-
-  useEffect(() => {
-    getDrivingTime(currentAddress, address).then((result) =>
-      setDrivingTime(result)
-    );
-  }, [address]);
 
   return (
     <div>
@@ -50,7 +42,7 @@ const ShopCard = ({ name, address, imageUrl, currentAddress }: Props) => {
             {address}
           </Typography>
           <Typography noWrap gutterBottom variant="caption">
-            {drivingTime} minutes driving
+            {drivingTime.minutes} minutes {drivingTime.seconds} seconds
           </Typography>
         </CardContent>
       </Card>

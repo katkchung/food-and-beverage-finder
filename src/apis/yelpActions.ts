@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Coffeeshop, Coordinates, Restaurant } from '../types';
 import { YELP_BEARER_TOKEN } from './constants';
+import { getDrivingTime } from './mapquestActions';
 
 const restaurantIdMap: Record<string, string> = {
   "Sushi Train": "FR9ZFGmwrrxCrolxZDy6NQ",
@@ -41,19 +42,27 @@ const restaurantIdMap: Record<string, string> = {
   "Tiger Sugar": "U0nC_UNCVZoYKyJLWtTiWg"
 };
 
-export async function getLocalCoffeeShops(coordinates: Coordinates): Promise<Coffeeshop[]> {
+export async function getLocalCoffeeShops(coordinates: Coordinates, currentAddress: string): Promise<Coffeeshop[]> {
   try {
     const res = await axios
       .get(
-        `https://api.yelp.com/v3/businesses/search?term=coffee&latitude=${coordinates.lat}&longitude=${coordinates.long}`,
+        `https://api.yelp.com/v3/businesses/search?term=coffee&latitude=${coordinates.lat}&longitude=${coordinates.long}&limit=48`,
         {
           headers: {
             Authorization:  YELP_BEARER_TOKEN,
           }
         }
       )
-      const coffeeshops = res.data.businesses.map((shop: any) => ({name: shop.name, address: shop.location.address1.concat(", ", shop.location.city, ", ", shop.location.state, " ", shop.location.zip_code), imageUrl: shop.image_url}))
-      return coffeeshops
+      const coffeeshops = res.data.businesses.map((shop: any) => ({name: shop.name, address: shop.location.address1.concat(", ", shop.location.city, ", ", shop.location.state, " ", shop.location.zip_code), imageUrl: shop.image_url, drivingTime: 0}))
+
+      let promises: any[] = []
+      coffeeshops.map(async (shop: any) => 
+        promises.push(getDrivingTime(currentAddress, shop.address).then((result) => {return {...shop, drivingTime: result}})
+        )
+
+      )
+      const coffeeshopsWithDrivingTime = await Promise.all(promises)
+      return coffeeshopsWithDrivingTime
   } catch (err) {
     throw(err)
   }
@@ -76,7 +85,7 @@ export async function getBusinessDetails(name: string): Promise<Restaurant> {
         address: shop.location.address1.concat(", ", shop.location.city, ", ", shop.location.state, " ", shop.location.zip_code),
         imageUrl: shop.image_url,
         rating: shop.rating,
-        currentlyOpen: shop.is_open_now
+        currentlyOpen: !shop.is_closed
       }
       return restaurant
   } catch (err) {

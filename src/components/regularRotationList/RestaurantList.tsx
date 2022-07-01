@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import { useState } from "react";
-import { Link, Outlet, useLocation, useParams } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import TopNav from "../TopNav";
 

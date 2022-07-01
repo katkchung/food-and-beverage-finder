@@ -3,6 +3,7 @@ import { getLocalCoffeeShops } from "../../apis/yelpActions";
 import ShopCard from "../ShopCard";
 import { Grid } from "@mui/material";
 import { Coffeeshop, Coordinates } from "../../types";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export interface Props {
   currentAddress: string;
@@ -11,26 +12,36 @@ export interface Props {
 
 const CoffeeshopList = ({ currentCoordinates, currentAddress }: Props) => {
   const [coffeeShops, setCoffeeShops] = useState<Coffeeshop[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
-    getLocalCoffeeShops(currentCoordinates).then((result: Coffeeshop[]) =>
-      setCoffeeShops(result)
+    setLoading(true);
+    getLocalCoffeeShops(currentCoordinates, currentAddress).then(
+      (result: Coffeeshop[]) => {
+        setCoffeeShops(result);
+        setLoading(false);
+      }
     );
   }, [currentCoordinates]);
 
   return (
     <div>
+      {loading && <CircularProgress />}
       <Grid container spacing={2}>
         {coffeeShops &&
-          coffeeShops.map((shop: Coffeeshop) => (
-            <Grid item key={shop.address} xs={3}>
-              <ShopCard
-                name={shop.name}
-                address={shop.address}
-                imageUrl={shop.imageUrl}
-                currentAddress={currentAddress}
-              />
-            </Grid>
-          ))}
+          coffeeShops
+            .sort((a: Coffeeshop, b: Coffeeshop) =>
+              a.drivingTime.minutes < b.drivingTime.minutes ? -1 : 1
+            )
+            .map((shop: Coffeeshop) => (
+              <Grid item key={shop.address} xs={3}>
+                <ShopCard
+                  name={shop.name}
+                  address={shop.address}
+                  imageUrl={shop.imageUrl}
+                  drivingTime={shop.drivingTime}
+                />
+              </Grid>
+            ))}
       </Grid>
     </div>
   );

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Coordinates } from '../types';
+import { Coordinates, DrivingTime } from '../types';
 import {MAPQUEST_KEY} from './constants'
 
 export async function getCoordinates(address: string): Promise<Coordinates> {
@@ -19,13 +19,16 @@ export async function getCoordinates(address: string): Promise<Coordinates> {
 };
 
 
-export async function getDrivingTime(address1: string, address2: string): Promise<number> {
+export async function getDrivingTime(address1: string, address2: string): Promise<DrivingTime> {
   try {
     const res = await axios
       .get(
         `http://www.mapquestapi.com/directions/v2/optimizedroute?key=${MAPQUEST_KEY}&json={"locations":["${address1}", "${address2}"]} `
         )
-      return Math.round(parseInt(res.data.route.realTime)/60)
+    const time = res.data.route.formattedTime.split(':');
+    const minutes = parseInt(time[1])
+    const seconds = parseInt(time[2])
+    return {minutes, seconds}
   } catch (err) {
     throw(err)
   }

@@ -6,7 +6,7 @@ An app that leverages the Yelp API and Mapquest API to 1) find local coffeeshops
 
 - Change `YELP_BEARER_TOKEN` and `MAPQUEST_KEY` to authentication tokens from Yelp & Mapquest in `constants.ts`. I didn't include my personal keys because that seems like it could be a security thing but you can either request your own from Yelp & Mapquest or slack me for my keys.
 - `yarn start` Run app locally.
-- Turn off CORS in whatever browser you want to view this in
+- Turn off CORS in whatever browser you want to view this in.
   Because of CORS as a security protocol but mostly a pain in this instance, I found the simplest method for me was to open up a Safari page and turn off CORS in Preferences > Advanced > Show Develop Menu in Menu Bar >> Develop > Disable Cross-Origin Restrictions
 
 ## To Do List
@@ -15,8 +15,12 @@ An app that leverages the Yelp API and Mapquest API to 1) find local coffeeshops
 - ~Why won't that `any` type go away~
 - Expand radius of coffeeshops
 - Group together coffeeshops of the same chain
+- ~~Sort by driving time~
 - Filter by driving time
+- Sort by walking time
+- Filter by walking time
 - Search by inputted term and not just coffee
+- use react query instead of axios
 - ~~Add Regular Restaurant Rotation List~~
 - Make the list scroll because I couldn't figure it out and it's 3:30am
 - Also figure out why the CSS for buttons isn't sticking

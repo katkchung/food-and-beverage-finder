@@ -23,7 +23,7 @@ const styles = () => {
 };
 const useStyles = makeStyles(styles);
 
-const RegularRotationPage = () => {
+const RestaurantDetails = () => {
   const classes = useStyles();
   const { restaurant } = useParams();
   const [restaurantDetails, setRestaurantDetails] = useState<
@@ -31,7 +31,7 @@ const RegularRotationPage = () => {
   >(undefined);
   useEffect(() => {
     if (restaurant) {
-      getBusinessDetails(restaurant).then((result) =>
+      getBusinessDetails(restaurant).then((result: Restaurant) =>
         setRestaurantDetails(result)
       );
     }
@@ -77,4 +77,4 @@ const RegularRotationPage = () => {
   );
 };
 
-export default RegularRotationPage;
+export default RestaurantDetails;

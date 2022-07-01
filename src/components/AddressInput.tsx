@@ -42,7 +42,7 @@ const AddressInput = ({ setCoordinates, setCurrentAddress }: Props) => {
             fullWidth
           />
         </Grid>
-        <Grid item xs={1}>
+        <Grid item xs={1} pl={1}>
           <Button
             variant="contained"
             onClick={() => {

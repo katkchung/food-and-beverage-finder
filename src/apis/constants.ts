@@ -1,2 +1,2 @@
-export const YELP_BEARER_TOKEN = ""
-export const MAPQUEST_KEY = ""
+export const YELP_BEARER_TOKEN = "Bearer M9RGpGJCtOJinbwUDOfvzCbiD91lOAm5DyZaeVvf5d77IKefLxlZGAv23fk_CUkH0gSAmwb9l6BmG6TNDJAx5_59ZMriHdk1OEetNPXg2FSi8zujPzhY6fL-Gxm6YXYx"
+export const MAPQUEST_KEY = "s2lNsFGWDG6FCI12pfoa3DMlyqdTj4ec"
