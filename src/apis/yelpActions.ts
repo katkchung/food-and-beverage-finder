@@ -10,7 +10,6 @@ const restaurantIdMap: Record<string, string> = {
   "On's Thai Kitchen": "oiV59HR1Js_-rfIN8UWtUw",
   "Lemon Grass Thai Cuisine" : "JVIwGOKo9E774uLGVFYNwA",
   "Mi-Sant": "WJX03pS0ZNZ0FRIxHRgYuA",
-  "Umami Fries": "4yrw59jUnaJX_RwOPx--5g",
   "Quang Restaurant": "Losq2H67kunQy6qQ6LFjmg", 
   "Ishita Ramen": "7b-Qkf3LBN9i92xUJrsHPQ",
   "Tea House Chinese Restaurant": "Mopw-koOu2bP9kPIl1v6Sg",
