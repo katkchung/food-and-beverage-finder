@@ -28,7 +28,6 @@ const restaurantIdMap: Record<string, string> = {
   "Yeah Yeah Taco": "R5371sng0zz7icCHxlpsoQ",
   "Nico's Taco and Tequila Bar": "HL8GOJJsauMCD8TET7UmNg",
   "Maya Cuisine": "mdXoIXksYTiJhsYo-uknkQ",
-  "Zettas": "x7Kij5bIpFEYdABsSUdEHA",
   "Galactic Pizza": "dBRIlzRYdvAhSdxOTBVYyw",
   "Young Joni": "5Y2nekkwRrNMMSx3b-2EhA",
   "Rinata": "9EdftCquw0YwWY3XsJlZVg",
