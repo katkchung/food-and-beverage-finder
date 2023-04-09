@@ -33,7 +33,7 @@ export async function getBusinessDetails(name: string): Promise<Restaurant> {
   try {
     const res = await axios
       .get(
-        `https://api.yelp.com/v3/businesses/${RestaurantMap[name].id}`,
+        `https://api.yelp.com/v3/businesses/${RestaurantMap.get(name)?.id}`,
         {
           headers: {
             Authorization:  YELP_BEARER_TOKEN,

@@ -1,10 +1,10 @@
 import { Grid, Typography } from "@mui/material";
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import TopNav from "../TopNav";
 import { getRestaurantGenres } from "../../apis/utility";
-import { Genre, RestaurantMap } from '../../types';
+import { Genre, RestaurantDTO, RestaurantMap } from "../../types";
 
 const styles = () => {
   return {
@@ -12,18 +12,17 @@ const styles = () => {
       overflowy: "scroll",
       top: "0",
       bottom: "0",
+      minWidth: "250px",
     },
     name: {
       marginLeft: "16px",
     },
-    genre1: {
-      marginLeft: "16px",
-      paddingBottom: "16px",
-    },
     genre: {
       marginLeft: "16px",
-      paddingTop: "32px",
       paddingBottom: "16px",
+      "&:not(:first-child)": {
+        paddingTop: "32px",
+      },
     },
     links: {
       textDecoration: "none",
@@ -31,134 +30,30 @@ const styles = () => {
   };
 };
 const useStyles = makeStyles(styles);
-
 const RestaurantList = () => {
   const classes = useStyles();
-  const [asianRestaurants, setAsianRestaurants] = useState<string[]>([
-    "Sushi Train",
-    "Sushi Takatsu",
-    "Namaste Cafe",
-    "On's Thai Kitchen",
-    "Lemon Grass Thai Cuisine",
-    "Mi-Sant",
-    "Quang Restaurant",
-    "Ishita Ramen",
-    "Tea House Chinese Restaurant",
-    "Peking Garden",
-    "Moto-i Ramen and Sake House",
-    "Peninsula Malaysian Cuisine",
-    "Hong Kong Noodle",
-    "King's Restaurant",
-  ]);
-  const [mediterraneanRestaurants, setMediterraneanRestaurants] = useState<
-    string[]
-  >(["Wally's Falafel and Hummus", "Olympia Cafe & Gyros"]);
-  const [americanRestaurants, setAmericanRestaurants] = useState<string[]>([
-    "Hell's Kitchen",
-    "Blue Door Pub Como",
-    "Portillo's",
-    "Matt's Bar",
-  ]);
-  const [mexicanRestaurants, setMexicanRestaurants] = useState<string[]>([
-    "Rusty Taco",
-    "Nico's Taco and Tequila Bar",
-    "Maya Cuisine",
-  ]);
-  const [italianRestaurants, setItalianRestaurants] = useState<string[]>([
-    "Zettas",
-    "Galactic Pizza",
-    "Young Joni",
-    "Rinata",
-  ]);
-  const [brunchRestaurants, setBrunchRestaurants] = useState<string[]>([
-    "Lands End Pasty Company",
-    "Isles Bun & Coffee",
-    "Eggy's Diner",
-    "Hen House Eatery",
-  ]);
-  const [bobaRestaurants, setBobaRestaurants] = useState<string[]>([
-    "Mi Tea",
-    "Ding Tea",
-    "Tiger Sugar",
-  ]);
-
   const restaurantTypes = Object.values(Genre);
-  console.log(restaurantTypes)
+
   return (
     <>
       <TopNav />
       <Grid container direction="row">
-        
         <Grid item xs={3} className={classes.list}>
-          <div className={classes.genre1}>
-            <Typography variant="h3">Asian</Typography>
-          </div>
-          {asianRestaurants.map((restaurant) => (
-            <div className={classes.name} key={restaurant}>
-              <Link to={restaurant} key={restaurant} className={classes.links}>
-                <Typography>{restaurant}</Typography>
-              </Link>
-            </div>
-          ))}
-          <div className={classes.genre}>
-            <Typography variant="h3">Mediterranean</Typography>
-          </div>
-          {mediterraneanRestaurants.map((restaurant) => (
-            <div className={classes.name} key={restaurant}>
-              <Link to={restaurant} key={restaurant} className={classes.links}>
-                <Typography>{restaurant}</Typography>
-              </Link>
-            </div>
-          ))}
-          <div className={classes.genre}>
-            <Typography variant="h3">American</Typography>
-          </div>
-          {americanRestaurants.map((restaurant) => (
-            <div className={classes.name} key={restaurant}>
-              <Link to={restaurant} key={restaurant} className={classes.links}>
-                <Typography>{restaurant}</Typography>
-              </Link>
-            </div>
-          ))}
-          <div className={classes.genre}>
-            <Typography variant="h3">Mexican</Typography>
-          </div>
-          {mexicanRestaurants.map((restaurant) => (
-            <div className={classes.name} key={restaurant}>
-              <Link to={restaurant} key={restaurant} className={classes.links}>
-                <Typography>{restaurant}</Typography>
-              </Link>
-            </div>
-          ))}
-          <div className={classes.genre}>
-            <Typography variant="h3">Italian</Typography>
-          </div>
-          {italianRestaurants.map((restaurant) => (
-            <div className={classes.name} key={restaurant}>
-              <Link to={restaurant} key={restaurant} className={classes.links}>
-                <Typography>{restaurant}</Typography>
-              </Link>
-            </div>
-          ))}
-          <div className={classes.genre}>
-            <Typography variant="h3">Brunch/Breakfast/Snack</Typography>
-          </div>
-          {brunchRestaurants.map((restaurant) => (
-            <div className={classes.name} key={restaurant}>
-              <Link to={restaurant} key={restaurant} className={classes.links}>
-                <Typography>{restaurant}</Typography>
-              </Link>
-            </div>
-          ))}
-          <div className={classes.genre}>
-            <Typography variant="h3">Boba</Typography>
-          </div>
-          {bobaRestaurants.map((restaurant) => (
-            <div className={classes.name} key={restaurant}>
-              <Link to={restaurant} key={restaurant} className={classes.links}>
-                <Typography>{restaurant}</Typography>
-              </Link>
-            </div>
+          {restaurantTypes.map((genre) => (
+            <Fragment key={genre}>
+              <div className={classes.genre}>
+                <Typography variant="h3">{genre}</Typography>
+              </div>
+              {Array.from(RestaurantMap)
+                .filter((restaurant) => restaurant[1].genre === genre)
+                .map((res) => (
+                  <div className={classes.name} key={res[0]}>
+                    <Link to={res[0]} key={res[1].id} className={classes.links}>
+                      <Typography>{res[0]}</Typography>
+                    </Link>
+                  </div>
+                ))}
+            </Fragment>
           ))}
         </Grid>
         <Grid item xs>
