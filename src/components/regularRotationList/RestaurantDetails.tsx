@@ -1,9 +1,10 @@
-import { Grid, Typography } from "@mui/material";
-import { makeStyles } from "@material-ui/core";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getBusinessDetails } from "../../apis/yelpActions";
-import { Restaurant } from "../../types";
+import { Grid, Typography } from "@mui/material"
+import { makeStyles } from "@material-ui/core"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import { getBusinessDetails } from "../../apis/yelpActions"
+import { Restaurant } from "../../types"
+import { useRestaurantContext } from "./RestaurantContext"
 
 const styles = () => {
   return {
@@ -19,23 +20,26 @@ const styles = () => {
     closed: {
       color: "brown",
     },
-  };
-};
-const useStyles = makeStyles(styles);
+  }
+}
+const useStyles = makeStyles(styles)
 
 const RestaurantDetails = () => {
-  const classes = useStyles();
-  const { restaurant } = useParams();
+  const classes = useStyles()
+  const { restaurant } = useParams()
   const [restaurantDetails, setRestaurantDetails] = useState<
     Restaurant | undefined
-  >(undefined);
+  >(undefined)
+
+  const { id } = useRestaurantContext()
+
   useEffect(() => {
-    if (restaurant) {
-      getBusinessDetails(restaurant).then((result: Restaurant) =>
+    if (restaurant && id != null) {
+      getBusinessDetails(id).then((result: Restaurant) =>
         setRestaurantDetails(result)
-      );
+      )
     }
-  }, [restaurant]);
+  }, [restaurant])
 
   return (
     <>
@@ -74,7 +78,7 @@ const RestaurantDetails = () => {
         </Grid>
       )}
     </>
-  );
-};
+  )
+}
 
-export default RestaurantDetails;
+export default RestaurantDetails
