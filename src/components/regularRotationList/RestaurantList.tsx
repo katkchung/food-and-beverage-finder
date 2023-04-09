@@ -9,7 +9,6 @@ import { Genre, RestaurantDTO, RestaurantMap } from "../../types";
 const styles = () => {
   return {
     list: {
-      overflowy: "scroll",
       top: "0",
       bottom: "0",
       minWidth: "350px",
@@ -38,7 +37,12 @@ const RestaurantList = () => {
     <>
       <TopNav />
       <Grid container direction="row">
-        <Grid item xs={3} className={classes.list}>
+        <Grid
+          item
+          xs={3}
+          className={classes.list}
+          style={{ maxHeight: "100vh", overflow: "auto" }}
+        >
           {restaurantTypes.map((genre) => (
             <Fragment key={genre}>
               <div className={classes.genre}>
