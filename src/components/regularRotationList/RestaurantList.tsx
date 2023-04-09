@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import TopNav from "../TopNav";
+import { getRestaurantGenres } from "../../apis/utility";
+import { Genre, RestaurantMap } from '../../types';
 
 const styles = () => {
   return {
@@ -39,7 +41,6 @@ const RestaurantList = () => {
     "On's Thai Kitchen",
     "Lemon Grass Thai Cuisine",
     "Mi-Sant",
-    "Umami Fries",
     "Quang Restaurant",
     "Ishita Ramen",
     "Tea House Chinese Restaurant",
@@ -49,7 +50,7 @@ const RestaurantList = () => {
     "Hong Kong Noodle",
     "King's Restaurant",
   ]);
-  const [mediterraneanRestaurants, setMeditteraneanRestaurants] = useState<
+  const [mediterraneanRestaurants, setMediterraneanRestaurants] = useState<
     string[]
   >(["Wally's Falafel and Hummus", "Olympia Cafe & Gyros"]);
   const [americanRestaurants, setAmericanRestaurants] = useState<string[]>([
@@ -60,7 +61,6 @@ const RestaurantList = () => {
   ]);
   const [mexicanRestaurants, setMexicanRestaurants] = useState<string[]>([
     "Rusty Taco",
-    "Yeah Yeah Taco",
     "Nico's Taco and Tequila Bar",
     "Maya Cuisine",
   ]);
@@ -81,16 +81,20 @@ const RestaurantList = () => {
     "Ding Tea",
     "Tiger Sugar",
   ]);
+
+  const restaurantTypes = Object.values(Genre);
+  console.log(restaurantTypes)
   return (
     <>
       <TopNav />
       <Grid container direction="row">
+        
         <Grid item xs={3} className={classes.list}>
           <div className={classes.genre1}>
             <Typography variant="h3">Asian</Typography>
           </div>
           {asianRestaurants.map((restaurant) => (
-            <div className={classes.name}>
+            <div className={classes.name} key={restaurant}>
               <Link to={restaurant} key={restaurant} className={classes.links}>
                 <Typography>{restaurant}</Typography>
               </Link>
@@ -100,7 +104,7 @@ const RestaurantList = () => {
             <Typography variant="h3">Mediterranean</Typography>
           </div>
           {mediterraneanRestaurants.map((restaurant) => (
-            <div className={classes.name}>
+            <div className={classes.name} key={restaurant}>
               <Link to={restaurant} key={restaurant} className={classes.links}>
                 <Typography>{restaurant}</Typography>
               </Link>
@@ -110,7 +114,7 @@ const RestaurantList = () => {
             <Typography variant="h3">American</Typography>
           </div>
           {americanRestaurants.map((restaurant) => (
-            <div className={classes.name}>
+            <div className={classes.name} key={restaurant}>
               <Link to={restaurant} key={restaurant} className={classes.links}>
                 <Typography>{restaurant}</Typography>
               </Link>
@@ -120,7 +124,7 @@ const RestaurantList = () => {
             <Typography variant="h3">Mexican</Typography>
           </div>
           {mexicanRestaurants.map((restaurant) => (
-            <div className={classes.name}>
+            <div className={classes.name} key={restaurant}>
               <Link to={restaurant} key={restaurant} className={classes.links}>
                 <Typography>{restaurant}</Typography>
               </Link>
@@ -130,7 +134,7 @@ const RestaurantList = () => {
             <Typography variant="h3">Italian</Typography>
           </div>
           {italianRestaurants.map((restaurant) => (
-            <div className={classes.name}>
+            <div className={classes.name} key={restaurant}>
               <Link to={restaurant} key={restaurant} className={classes.links}>
                 <Typography>{restaurant}</Typography>
               </Link>
@@ -140,7 +144,7 @@ const RestaurantList = () => {
             <Typography variant="h3">Brunch/Breakfast/Snack</Typography>
           </div>
           {brunchRestaurants.map((restaurant) => (
-            <div className={classes.name}>
+            <div className={classes.name} key={restaurant}>
               <Link to={restaurant} key={restaurant} className={classes.links}>
                 <Typography>{restaurant}</Typography>
               </Link>
@@ -150,7 +154,7 @@ const RestaurantList = () => {
             <Typography variant="h3">Boba</Typography>
           </div>
           {bobaRestaurants.map((restaurant) => (
-            <div className={classes.name}>
+            <div className={classes.name} key={restaurant}>
               <Link to={restaurant} key={restaurant} className={classes.links}>
                 <Typography>{restaurant}</Typography>
               </Link>
