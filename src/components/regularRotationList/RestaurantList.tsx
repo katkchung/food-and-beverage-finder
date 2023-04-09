@@ -12,7 +12,7 @@ const styles = () => {
       overflowy: "scroll",
       top: "0",
       bottom: "0",
-      minWidth: "250px",
+      minWidth: "350px",
     },
     name: {
       marginLeft: "16px",
