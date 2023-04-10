@@ -1,10 +1,9 @@
 import { Grid, Typography } from "@mui/material"
-import { Fragment } from "react"
-import { Link, Outlet } from "react-router-dom"
+import { Fragment, useState } from "react"
+import { Link, Outlet, useOutletContext } from "react-router-dom"
 import { makeStyles } from "@material-ui/core"
 import TopNav from "../TopNav"
 import { Genre, restaurants } from "../../types"
-import { useRestaurantContext } from "./RestaurantContext"
 
 const styles = () => {
   return {
@@ -29,10 +28,15 @@ const styles = () => {
   }
 }
 const useStyles = makeStyles(styles)
+
+export function useRestaurantContext() {
+  return useOutletContext<{ id: string | undefined }>()
+}
+
 const RestaurantList = () => {
   const classes = useStyles()
   const restaurantTypes = Object.values(Genre)
-  const { setId } = useRestaurantContext()
+  const [id, setId] = useState<string>("")
 
   return (
     <>
@@ -65,7 +69,7 @@ const RestaurantList = () => {
           ))}
         </Grid>
         <Grid item xs>
-          <Outlet />
+          <Outlet context={{ id }} />
         </Grid>
       </Grid>
     </>
