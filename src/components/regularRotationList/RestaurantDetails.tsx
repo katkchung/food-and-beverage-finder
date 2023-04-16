@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getBusinessDetails } from "../../apis/yelpActions"
 import { Restaurant } from "../../types"
-import { useRestaurantContext } from "./RestaurantContext"
+import { useRestaurantContext } from "./RestaurantList"
 
 const styles = () => {
   return {
