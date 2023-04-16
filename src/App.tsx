@@ -1,18 +1,17 @@
-import React from "react";
-import "./App.css";
-import CoffeeshopSearchPage from "./components/coffeeshop/CoffeeshopSearchPage";
-import Homepage from "./components/Homepage";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css"
+import CoffeeshopSearchPage from "./components/coffeeshop/CoffeeshopSearchPage"
+import Homepage from "./components/Homepage"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import RestaurantList from "./components/regularRotationList/RestaurantList";
-import RestaurantDetails from "./components/regularRotationList/RestaurantDetails";
+import { MuiThemeProvider, createTheme } from "@material-ui/core/styles"
+import RestaurantList from "./components/regularRotationList/RestaurantList"
+import RestaurantDetails from "./components/regularRotationList/RestaurantDetails"
 
 const theme = createTheme({
   typography: {
     fontFamily: "Raleway , sans-serif",
   },
-});
+})
 
 function App() {
   return (
@@ -27,6 +26,6 @@ function App() {
         </Routes>
       </Router>
     </MuiThemeProvider>
-  );
+  )
 }
-export default App;
+export default App

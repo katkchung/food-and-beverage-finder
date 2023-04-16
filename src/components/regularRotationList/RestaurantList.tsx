@@ -1,10 +1,9 @@
-import { Grid, Typography } from "@mui/material";
-import { useState, Fragment } from "react";
-import { Link, Outlet } from "react-router-dom";
-import { makeStyles } from "@material-ui/core";
-import TopNav from "../TopNav";
-import { getRestaurantGenres } from "../../apis/utility";
-import { Genre, RestaurantDTO, RestaurantMap } from "../../types";
+import { Grid, Typography } from "@mui/material"
+import { Fragment, useState } from "react"
+import { Link, Outlet, useOutletContext } from "react-router-dom"
+import { makeStyles } from "@material-ui/core"
+import TopNav from "../TopNav"
+import { Genre, restaurants } from "../../types"
 
 const styles = () => {
   return {
@@ -26,12 +25,18 @@ const styles = () => {
     links: {
       textDecoration: "none",
     },
-  };
-};
-const useStyles = makeStyles(styles);
+  }
+}
+const useStyles = makeStyles(styles)
+
+export function useRestaurantContext() {
+  return useOutletContext<{ id: string | undefined }>()
+}
+
 const RestaurantList = () => {
-  const classes = useStyles();
-  const restaurantTypes = Object.values(Genre);
+  const classes = useStyles()
+  const restaurantTypes = Object.values(Genre)
+  const [id, setId] = useState<string>("")
 
   return (
     <>
@@ -48,24 +53,27 @@ const RestaurantList = () => {
               <div className={classes.genre}>
                 <Typography variant="h3">{genre}</Typography>
               </div>
-              {Array.from(RestaurantMap)
-                .filter((restaurant) => restaurant[1].genre === genre)
-                .map((res) => (
-                  <div className={classes.name} key={res[0]}>
-                    <Link to={res[0]} key={res[1].id} className={classes.links}>
-                      <Typography>{res[0]}</Typography>
-                    </Link>
-                  </div>
-                ))}
+              {restaurants[genre].map((restaurant) => (
+                <div className={classes.name} key={restaurant.name}>
+                  <Link
+                    to={restaurant.name}
+                    key={restaurant.id}
+                    className={classes.links}
+                    onClick={() => setId(restaurant.id)}
+                  >
+                    <Typography>{restaurant.name}</Typography>
+                  </Link>
+                </div>
+              ))}
             </Fragment>
           ))}
         </Grid>
         <Grid item xs>
-          <Outlet />
+          <Outlet context={{ id }} />
         </Grid>
       </Grid>
     </>
-  );
-};
+  )
+}
 
-export default RestaurantList;
+export default RestaurantList
